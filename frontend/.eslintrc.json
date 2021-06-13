@@ -1,0 +1,53 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "allowImportExportEverywhere": false,
+    "codeFrame": false,
+    "ecmaFeatures": {
+      "jsx": true // Allows for the parsing of JSX
+    }
+  },
+  "plugins": ["testing-library", "jest-dom", "@typescript-eslint"],
+  "extends": [
+    "airbnb", 
+    "prettier", 
+    "plugin:jest-dom/recommended",
+    "plugin:testing-library/react",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "rules": {
+    "max-len": ["error", {"code": 120}],
+    "import/extensions": ["off"],
+    "no-use-before-define": "off",
+    "no-underscore-dangle": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "prefer-promise-reject-errors": ["off"],
+    "react/jsx-filename-extension": ["off"],
+    "react/prop-types": ["off"],
+    "no-return-assign": ["off"],
+    "react/jsx-props-no-spreading": ["off"],
+    "import/no-extraneous-dependencies": ["off"],
+    "react/forbid-prop-types": ["off"],
+    "react/require-default-props": ["error", { "ignoreFunctionalComponents": true }],
+    "react/state-in-constructor": ["off"],
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "react/jsx-curly-newline": "off",
+    "testing-library/prefer-screen-queries": "off",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "testing-library/no-node-access": "off"
+  },
+  "settings": {
+    "import/resolver": {
+     "webpack": {
+       "config": "config/webpack.common.js"
+     }
+    }
+  }
+}
