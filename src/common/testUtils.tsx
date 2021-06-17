@@ -19,26 +19,24 @@ interface WrapperOptions {
   };
 }
 
-const ProvidersWrapper = ({
-  theme = {},
-  auth = {},
-  route = '/',
-  apollo: { mocks = [], cache } = {},
-}: WrapperOptions): React.FC => ({ children }) => (
-  <MemoryRouter initialEntries={[route]}>
-    <MockedProvider mocks={mocks} cache={cache}>
-      <SnackbarProvider maxSnack={3}>
-        <ThemeProvider theme={createMuiTheme({ sizes: {}, ...theme })}>
-          <ConfirmProvider>
-            <AuthContext.Provider value={auth}>
-              <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-            </AuthContext.Provider>
-          </ConfirmProvider>
-        </ThemeProvider>
-      </SnackbarProvider>
-    </MockedProvider>
-  </MemoryRouter>
-);
+const ProvidersWrapper =
+  ({ theme = {}, auth = {}, route = '/', apollo: { mocks = [], cache } = {} }: WrapperOptions): React.FC =>
+  ({ children }) =>
+    (
+      <MemoryRouter initialEntries={[route]}>
+        <MockedProvider mocks={mocks} cache={cache}>
+          <SnackbarProvider maxSnack={3}>
+            <ThemeProvider theme={createMuiTheme({ sizes: {}, ...theme })}>
+              <ConfirmProvider>
+                <AuthContext.Provider value={auth}>
+                  <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+                </AuthContext.Provider>
+              </ConfirmProvider>
+            </ThemeProvider>
+          </SnackbarProvider>
+        </MockedProvider>
+      </MemoryRouter>
+    );
 
 const customRender = (ui: React.ReactElement, providerOptions: WrapperOptions = {}) =>
   render(ui, { wrapper: ProvidersWrapper(providerOptions) });

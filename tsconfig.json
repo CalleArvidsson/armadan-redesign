@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "esnext",
+    "allowJs": true,
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "images/*": ["assets/images/*"],
+      "components/*": ["src/components/*"],
+      "contexts/*": ["src/contexts/*"],
+      "relay/*": ["src/relay/*"],
+      "services/*": ["src/services/*"],
+      "views/*": ["src/views/*"],
+      "common/*": ["src/common/*"],
+      "mutations/*": ["src/mutations/*"],
+      "hooks/*": ["src/hooks/*"],
+      "types": ["src/types/index"]
+    }
+  },
+  "include": ["src/**/*", "helpers/**/*"]
+}

@@ -7,7 +7,7 @@ interface Props {
   leaderboard: Leader[];
 }
 
-export const LeaderList: FC<Props> = ({ leaderboard }) => (
+const LeaderList: FC<Props> = ({ leaderboard }) => (
   <TableContainer>
     <Table stickyHeader>
       <TableHead>

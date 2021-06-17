@@ -21,9 +21,10 @@ interface Props {
 }
 
 const Leaderboard: FC<Props> = ({ data }) => {
-  const leaderboard = useMemo<Leader[]>(() => orderBy(data.leaderboard, ['points', 'rounds'], ['desc', 'desc']), [
-    data.leaderboard,
-  ]);
+  const leaderboard = useMemo<Leader[]>(
+    () => orderBy(data.leaderboard, ['points', 'rounds'], ['desc', 'desc']),
+    [data.leaderboard]
+  );
 
   return <LeaderList leaderboard={leaderboard} />;
 };

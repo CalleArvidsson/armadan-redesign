@@ -4,14 +4,15 @@
     "sourceType": "module",
     "allowImportExportEverywhere": false,
     "codeFrame": false,
+    "project": "tsconfig.json",
     "ecmaFeatures": {
       "jsx": true // Allows for the parsing of JSX
     }
   },
   "plugins": ["testing-library", "jest-dom", "@typescript-eslint"],
   "extends": [
-    "airbnb", 
-    "prettier", 
+    "airbnb-typescript",
+    "prettier",
     "plugin:jest-dom/recommended",
     "plugin:testing-library/react",
     "plugin:@typescript-eslint/recommended"
@@ -46,7 +47,7 @@
   "settings": {
     "import/resolver": {
      "webpack": {
-       "config": "config/webpack.common.js"
+       "config": "webpack/webpack.common.js"
      }
     }
   }

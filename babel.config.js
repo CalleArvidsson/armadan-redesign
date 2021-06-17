@@ -15,5 +15,5 @@ module.exports = {
     ],
     '@babel/preset-typescript',
   ],
-  plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-proposal-export-default-from'],
+  plugins: ['@babel/plugin-proposal-export-default-from'],
 };
