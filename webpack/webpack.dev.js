@@ -1,8 +1,15 @@
-const { merge } = require('webpack-merge');
+const { mergeWithRules } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const paths = require('../helpers/paths');
 
-module.exports = merge(common, {
+module.exports = mergeWithRules({
+  module: {
+    rules: {
+      test: 'match',
+      use: 'prepend',
+    },
+  },
+})(common, {
   mode: 'development',
   devtool: 'inline-source-map',
   target: 'web',
@@ -18,5 +25,13 @@ module.exports = merge(common, {
       errors: true,
       warnings: true,
     },
+  },
+  module: {
+    rules: [
+      {
+        test: /\.s[ac]ss$/i,
+        use: ['style-loader'],
+      },
+    ],
   },
 });
