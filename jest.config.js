@@ -8,6 +8,8 @@ module.exports = {
     '\\.svg$': '<rootDir>/helpers/fileTransformer.js',
   },
   moduleNameMapper: {
+    '^#/(.*)': '<rootDir>/src/$1',
+    '^.+\\.scss': '<rootDir>/helpers/fileMock.js',
     '^relay(.*)$': '<rootDir>/src/relay$1',
     '^contexts(.*)$': '<rootDir>/src/contexts$1',
     '^components(.*)$': '<rootDir>/src/components$1',

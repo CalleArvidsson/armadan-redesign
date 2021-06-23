@@ -10,6 +10,7 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
+      "#/*": ["src/*"],
       "images/*": ["assets/images/*"],
       "components/*": ["src/components/*"],
       "contexts/*": ["src/contexts/*"],
