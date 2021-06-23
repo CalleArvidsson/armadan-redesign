@@ -1,0 +1,35 @@
+@use 'colors';
+
+@mixin base-font-size {
+  font-size: 14px;
+  line-height: 22px;
+}
+
+@mixin wave {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  border-radius: inherit;
+  box-shadow: 0 0 #1890ff;
+  opacity: 0.2;
+  animation: fadeEffect 2s cubic-bezier(.08,.82,.17,1), waveEffect 0.4s cubic-bezier(0.08, 0.82, 0.17, 1);
+  animation-fill-mode: forwards;
+  content: "";
+  pointer-events: none;
+}
+
+@keyframes waveEffect {
+  to {
+    box-shadow: 0 0 colors.$primary;
+    box-shadow: 0 0 0 6px colors.$primary;
+  }
+}
+
+@keyframes fadeEffect {
+  to {
+    opacity: 0;
+  }
+}

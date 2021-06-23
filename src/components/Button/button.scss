@@ -1,0 +1,350 @@
+@use 'sass:math' as math;
+@use '../../styles/colors';
+@use '../../styles/variables' as vars;
+@use '../../styles/mixins';
+
+$btn-font-weight: 400;
+$btn-font-lg: vars.$lg-font-size;
+$btn-font-sm: vars.$base-font-size;
+$btn-border-radius: vars.$base-border-radius;
+$btn-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+$btn-primary-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+$btn-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+$btn-padding-horizontal: vars.$padding-md - 1px;
+$btn-padding-horizontal-lg: $btn-padding-horizontal;
+$btn-padding-horizontal-sm: vars.$padding-xs - 1px;
+$btn-height: vars.$base-height;
+$btn-height-lg: vars.$lg-height;
+$btn-height-sm: vars.$sm-height;
+
+$btn-square-only-icon-size: vars.$base-font-size + 2px;
+$btn-square-only-icon-size-sm: vars.$base-font-size;
+$btn-square-only-icon-size-lg: vars.$lg-font-size + 2px;
+
+$btn-default-color: colors.$text-color;
+$btn-default-bg: colors.$component-bg;
+$btn-default-border: colors.$base-border-color;
+
+$btn-primary-color: #fff;
+$btn-primary-bg: colors.$primary-color;
+
+$btn-danger-color: #fff;
+$btn-danger-bg: colors.$error-color;
+$btn-danger-border: colors.$error-color;
+
+$btn-disabled-color: colors.$disabled-color;
+$btn-disabled-bg: colors.$disabled-bg;
+$btn-disabled-border: $btn-default-border;
+
+$btn-link-hover-bg: transparent;
+$btn-text-hover-bg: rgba(0, 0, 0, 0.018);
+
+@mixin btn-size(
+  $height: $btn-height,
+  $font-size: vars.$base-font-size,
+  $padding-horizontal: $btn-padding-horizontal,
+  $br: vars.$base-border-radius
+) {
+  $padding-vertical: math.max(
+    math.div(math.round(math.div($height - $font-size * vars.$base-line-height, 2) * 10), 10) - 1px,
+    0
+  );
+
+  height: $height;
+  padding: $padding-vertical $padding-horizontal;
+  border-radius: $br;
+  font-size: $font-size;
+}
+
+@mixin danger {
+  background: colors.$danger;
+  border-color: colors.$danger;
+}
+
+@mixin btn-color($color, $bg, $border) {
+  color: $color;
+  background-color: $bg;
+  border-color: $border;
+}
+
+@mixin disabled($c: $btn-disabled-color, $bc: $btn-disabled-border, $bg: $btn-disabled-bg) {
+  &[disabled] {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      @include btn-color($c, $bg, $bc);
+      text-shadow: none;
+      box-shadow: none;
+    }
+  }
+}
+
+@mixin btn-variant-other($c, $bg, $border) {
+  @include btn-color($c, $bg, $border);
+  @include disabled;
+
+  &:hover {
+    @include btn-color(colors.$primary-5, $bg, colors.$primary-5);
+  }
+}
+
+.button {
+  position: relative;
+  display: inline-block;
+  font-weight: $btn-font-weight;
+  white-space: nowrap;
+  text-align: center;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  box-shadow: $btn-shadow;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  @include btn-size;
+  @include btn-variant-other($btn-default-color, $btn-default-bg, $btn-default-border);
+
+  &,
+  &:active,
+  &:focus {
+    outline: 0;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+
+    > * {
+      pointer-events: none;
+    }
+  }
+
+  > :global(.anticon) {
+    line-height: 1;
+  }
+
+  &.small {
+    @include btn-size($btn-height-sm, $btn-font-sm, $btn-padding-horizontal-sm);
+  }
+
+  &.large {
+    @include btn-size($btn-height-lg, $btn-font-lg, $btn-padding-horizontal-lg);
+  }
+
+  &.primary {
+    @include btn-color($btn-primary-color, $btn-primary-bg, $btn-primary-bg);
+    @include disabled;
+
+    box-shadow: $btn-primary-shadow;
+    text-shadow: $btn-text-shadow;
+
+    &:hover {
+      @include btn-color($btn-primary-color, colors.$primary-5, colors.$primary-5);
+    }
+  }
+
+  &.dashed {
+    border-style: dashed;
+  }
+
+  &.text {
+    @include btn-variant-other($btn-default-color, transparent, transparent);
+    @include disabled($bg: transparent, $bc: transparent);
+
+    box-shadow: none;
+
+    &:hover {
+      color: $btn-default-color;
+      background: $btn-text-hover-bg;
+      border-color: transparent;
+    }
+  }
+
+  &.link {
+    @include btn-variant-other(colors.$primary-color, transparent, transparent);
+    @include disabled($bg: transparent, $bc: transparent);
+
+    box-shadow: none;
+
+    &:hover {
+      border-color: transparent;
+    }
+  }
+
+  &.dangerous {
+    color: colors.$danger;
+    border-color: colors.$danger;
+    @include disabled;
+
+    &:hover {
+      color: colors.$danger-light;
+      border-color: colors.$danger-light;
+    }
+
+    &.primary,
+    &.dashed {
+      @include disabled;
+      border-color: colors.$danger;
+    }
+
+    &.primary {
+      color: white;
+      background: colors.$danger;
+
+      &:hover {
+        background: colors.$danger-light;
+        border-color: colors.$danger-light;
+      }
+    }
+
+    &.text,
+    &.link {
+      @include disabled(transparent, transparent);
+      border-color: transparent;
+      background-color: transparent;
+    }
+
+    &.text {
+      &:hover {
+        background: rgba(0, 0, 0, 0.018);
+      }
+    }
+  }
+
+  &.block {
+    width: 100%;
+  }
+
+  &.icon-only {
+    @include btn-size($btn-height, $btn-square-only-icon-size, 0);
+    width: $btn-height;
+    vertical-align: -1px;
+
+    & > * {
+      font-size: $btn-square-only-icon-size;
+    }
+
+    &.small {
+      @include btn-size($btn-height-sm, $btn-square-only-icon-size-sm, 0);
+      width: $btn-height-sm;
+
+      & > * {
+        font-size: $btn-square-only-icon-size-sm;
+      }
+    }
+
+    &.large {
+      @include btn-size($btn-height-lg, $btn-square-only-icon-size-lg, 0);
+      width: $btn-height-lg;
+
+      & > * {
+        font-size: $btn-square-only-icon-size-lg;
+      }
+    }
+
+    &.circle {
+      min-width: $btn-height;
+      padding-right: 0;
+      padding-left: 0;
+      text-align: center;
+      border-radius: 50%;
+
+      &.small {
+        min-width: $btn-height-sm;
+        border-radius: 50%;
+      }
+
+      &.large {
+        min-width: $btn-height-lg;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  &.round {
+    @include btn-size($btn-height, vars.$base-font-size, math.div($btn-height, 2), $btn-height);
+
+    &.large {
+      @include btn-size($btn-height-lg, $btn-font-lg, math.div($btn-height-lg, 2), $btn-height-lg);
+    }
+
+    &.small {
+      @include btn-size($btn-height-sm, $btn-font-sm, math.div($btn-height-sm, 2), $btn-height-sm);
+    }
+
+    &.icon-only {
+      width: auto;
+    }
+  }
+
+  &.loading {
+    position: relative;
+    &:before {
+      display: block;
+    }
+
+    pointer-events: none;
+  }
+
+  &.clicked {
+    &:not(.link, .text) {
+      &:after {
+        @include mixins.wave;
+      }
+    }
+  }
+
+  &:before {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+    left: -1px;
+    z-index: 1;
+    display: none;
+    background: #fff;
+    border-radius: inherit;
+    opacity: 0.35;
+    transition: opacity 0.2s;
+    content: '';
+    pointer-events: none;
+  }
+}
+
+.loading-icon {
+  opacity: 0;
+  width: 0;
+  transform: scale(0);
+  display: inline-block;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  &-entering,
+  &-entered {
+    opacity: 1;
+    width: 22px;
+    transform: scale(1);
+  }
+
+  &.loading-icon-only {
+    :global(.anticon) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  :global(.anticon) {
+    padding-right: 8px;
+    transition: margin-left 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    animation: none;
+  }
+
+  & svg {
+    animation: loadingCircle 1s infinite linear;
+  }
+}
+
+@keyframes loadingCircle {
+  to {
+    transform: rotate(360deg);
+  }
+}

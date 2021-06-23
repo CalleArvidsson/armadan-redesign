@@ -1,0 +1,129 @@
+@use 'sass:color' as color;
+@use 'sass:math' as math;
+
+$hue-step: 2;
+$sat-step: 0.16;
+$sat-step-2: 0.05;
+$bri-step: 0.05;
+$bri-step-2: 0.15;
+$light-count: 5;
+$dark-count: 4;
+
+@function hsv-val($color) {
+  $lum: math.div(color.lightness($color), 100%);
+  $sat: math.div(color.saturation($color), 100%);
+  $val: $lum + ($sat * math.min($lum, 1 - $lum));
+
+  @return $val;
+}
+
+@function hsv-sat($color) {
+  $lum: math.div(color.lightness($color), 100%);
+  $val: hsv-val($color);
+  $hsv-sat: 0;
+
+  @if ($val > 0) {
+    $hsv-sat: 2 * (1 - math.div($lum, $val));
+  }
+
+  @return $hsv-sat;
+}
+
+@function get-hue($color, $index, $is-light) {
+  $hue: math.div(color.hue($color), 1deg);
+
+  @if $hue >= 60 and $hue <= 240 {
+    @if $is-light {
+      $hue: $hue - ($hue-step * $index);
+    } @else {
+      $hue: $hue + ($hue-step * $index);
+    }
+  } @else {
+    @if $is-light {
+      $hue: $hue + ($hue-step * $index);
+    } @else {
+      $hue: $hue - ($hue-step * $index);
+    }
+  }
+
+  @if $hue < 0 {
+    $hue: $hue + 360;
+  } @else if $hue >= 360 {
+    $hue: $hue - 360;
+  }
+
+  @return math.round($hue);
+}
+
+@function get-sat($color, $index, $is-light) {
+  $hsv-sat: hsv-sat($color);
+
+  @if $is-light {
+    $hsv-sat: $hsv-sat - ($sat-step * $index);
+  } @else if $index == $dark-count {
+    $hsv-sat: $hsv-sat + $sat-step;
+  } @else {
+    $hsv-sat: $hsv-sat + ($sat-step-2 * $index);
+  }
+
+  @if $hsv-sat > 1 {
+    $hsv-sat: 1;
+  }
+
+  @if $is-light and $index == $light-count and $hsv-sat > 0.1 {
+    $hsv-sat: 0.1;
+  }
+
+  @if $hsv-sat < 0.06 {
+    $hsv-sat: 0.06;
+  }
+
+  @return $hsv-sat;
+}
+
+@function get-value($color, $index, $is-light) {
+  $val: hsv-val($color);
+
+  @if $is-light {
+    $val: $val + ($bri-step * $index);
+  } @else {
+    $val: $val - ($bri-step-2 * $index);
+  }
+
+  @if $val > 1 {
+    $val: 1;
+  }
+
+  @return $val;
+}
+
+@function hsv2hsl($h, $s, $v) {
+  $s: math.div(math.round($s * 100), 100);
+  $v: math.div(math.round($v * 100), 100);
+
+  $l-hsl: $v * (1 - math.div($s, 2));
+  $s-hsl: 0;
+
+  @if $l-hsl != 0 and $l-hsl != 1 {
+    $s-hsl: math.div(($v - $l-hsl), math.min($l-hsl, 1 - $l-hsl));
+  }
+
+  @return hsl($h, $s-hsl * 100%, $l-hsl * 100%);
+}
+
+@function get-color($color, $index) {
+  $is-light: $index <= 6;
+  $i: $index;
+
+  @if $is-light {
+    $i: $light-count + 1 - $index;
+  } @else {
+    $i: $index - $light-count - 1;
+  }
+
+  $hue: get-hue($color, $i, $is-light) * 1deg;
+  $hsv-sat: get-sat($color, $i, $is-light);
+  $hsv-val: get-value($color, $i, $is-light);
+
+  @return hsv2hsl($hue, $hsv-sat, $hsv-val);
+}

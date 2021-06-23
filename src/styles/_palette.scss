@@ -1,0 +1,23 @@
+@use 'utils';
+
+$blue-base: #1890ff;
+$blue-1: utils.get-color($blue-base, 1);
+$blue-2: utils.get-color($blue-base, 2);
+$blue-3: utils.get-color($blue-base, 3);
+$blue-4: utils.get-color($blue-base, 4);
+$blue-5: utils.get-color($blue-base, 5);
+$blue-6: $blue-base;
+$blue-7: utils.get-color($blue-base, 7);
+$blue-8: utils.get-color($blue-base, 8);
+$blue-9: utils.get-color($blue-base, 9);
+$blue-10: utils.get-color($blue-base, 10);
+
+$red-base: #f5222d;
+$red-5: utils.get-color($red-base, 5);
+$red-6: $red-base;
+
+$green-base: #52c41a;
+$green-6: $green-base;
+
+$gold-base: #faad14;
+$gold-6: $gold-base;

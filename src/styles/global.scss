@@ -1,0 +1,20 @@
+@use 'mixins';
+@use 'colors';
+@use 'variables';
+
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  @include mixins.base-font-size;
+
+  font-family: variables.$font-family;
+  font-variant-numeric: tabular-nums;
+  color: colors.$text-color;
+  background: colors.$body-background;
+}

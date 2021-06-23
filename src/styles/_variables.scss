@@ -1,0 +1,30 @@
+// Font
+$base-font-size: 14px;
+$lg-font-size: $base-font-size + 2px;
+$sm-font-size: $base-font-size - 2px;
+$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+'Noto Color Emoji';
+$base-line-height: 1.5715;
+
+// Borders
+$base-border-radius: 2px;
+
+// Paddings
+$padding-lg: 24px;
+$padding-md: 16px;
+$padding-sm: 12px;
+$padding-xs: 8px;
+$padding-xss: 4px;
+
+// Margins
+$margin-lg: 24px;
+$margin-md: 16px;
+$margin-sm: 12px;
+$margin-xs: 8px;
+$margin-xss: 4px;
+
+// Heights
+$base-height: 32px;
+$lg-height: 40px;
+$sm-height: 24px;
