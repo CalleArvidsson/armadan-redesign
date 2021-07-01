@@ -12,6 +12,7 @@ module.exports = {
   srcPublic: PATH_PUBLIC,
   distPublic: path.join(PATH_DIST, './public'),
   aliases: {
+    '#': PATH_SRC,
     images: path.resolve(__dirname, '../assets/images'),
     components: path.resolve(__dirname, '../src/components'),
     contexts: path.resolve(__dirname, '../src/contexts'),
