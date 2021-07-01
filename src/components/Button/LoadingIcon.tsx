@@ -26,7 +26,7 @@ const LoadingIcon = ({ loading = false, noAnimate = false, onlyChild = false }: 
   return (
     <CSSTransition
       in={loading}
-      timeout={1300}
+      timeout={300}
       classNames={{
         enterActive: styles.loadingIconEntering,
         enterDone: styles.loadingIconEntered,
