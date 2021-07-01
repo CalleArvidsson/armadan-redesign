@@ -1,4 +1,4 @@
-import { render, userEvent } from '#/common/testUtils';
+import { render } from '#/common/testUtils';
 import Input from '.';
 
 const baseProps = {
