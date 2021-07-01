@@ -1,5 +1,6 @@
 @use 'sass:color' as color;
 @use 'sass:math' as math;
+@use 'variables' as vars;
 
 $hue-step: 2;
 $sat-step: 0.16;
@@ -127,3 +128,12 @@ $dark-count: 4;
 
   @return hsv2hsl($hue, $hsv-sat, $hsv-val);
 }
+
+@function vertical-padding(
+  $height: vars.$base-height,
+  $fs: vars.$base-font-size,
+  $lh: vars.$base-line-height,
+  $max: 0
+) {
+  @return math.max(math.div(math.round(math.div($height - $fs * $lh, 2) * 10), 10) - 1px, $max);
+} ;

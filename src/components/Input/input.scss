@@ -1,0 +1,149 @@
+@use 'sass:math' as math;
+@use 'sass:color' as color;
+@use '../../styles/variables' as vars;
+@use '../../styles/colors';
+@use '../../styles/utils';
+
+$input-height: vars.$base-height;
+$input-lg: vars.$lg-height;
+$input-sm: vars.$sm-height;
+$h-padding: vars.$control-padding-horizontal - 1px;
+$h-padding-sm: vars.$control-padding-horizontal-sm - 1px;
+$h-padding-lg: $h-padding;
+$v-padding: utils.vertical-padding(
+  $max: 3px,
+);
+$v-padding-sm: utils.vertical-padding(
+  $height: $input-sm,
+);
+$v-padding-lg: math.ceil(math.div(math.div($input-lg - vars.$base-font-size * vars.$base-line-height, 2) * 10, 10)) -
+  1px;
+$input-placeholder: #bfbfbf;
+$input-color: colors.$text-color;
+$icon-color: $input-color;
+$input-border-color: colors.$base-border-color;
+$input-bg: colors.$component-bg;
+$input-hover-border: colors.$primary-5;
+$input-disabled-bg: colors.$disabled-bg;
+$input-disabled-color: colors.$disabled-color;
+
+.input {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  min-width: 0;
+  background-color: $input-bg;
+  transition: all 0.3s;
+  border: 1px solid $input-border-color;
+  border-radius: vars.$base-border-radius;
+  color: $input-color;
+  line-height: vars.$base-line-height;
+  padding: $v-padding $h-padding;
+  font-size: vars.$base-font-size;
+
+  &.large {
+    padding: $v-padding-lg $h-padding-lg;
+    font-size: vars.$lg-font-size;
+  }
+
+  &.small {
+    padding: $v-padding-sm $h-padding-sm;
+  }
+
+  &::placeholder {
+    color: $input-placeholder;
+  }
+
+  &:hover {
+    border-color: $input-hover-border;
+    border-right-width: 1px;
+  }
+
+  &.focused,
+  &:focus {
+    outline: 0;
+    border-color: colors.$primary-5;
+    border-right-width: 1px;
+    box-shadow: 0 0 0 2px color.adjust(colors.$primary-color, $alpha: -0.8);
+  }
+
+  &.disabled,
+  &[disabled] {
+    color: $input-disabled-color;
+    background-color: $input-disabled-bg;
+    cursor: not-allowed;
+    opacity: 1;
+
+    &:hover {
+      border-color: $input-border-color;
+    }
+  }
+
+  &.error {
+    border-color: colors.$error-color;
+
+    &.focused,
+    &:focus {
+      box-shadow: 0 0 0 2px color.adjust(colors.$error-color, $alpha: -0.8);
+    }
+  }
+}
+
+.error-text {
+  clear: both;
+  min-height: 22px;
+  opacity: 0;
+  transform: translate3d(0, -5px, 0);
+  color: colors.$error-color;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  &-entering,
+  &-entered {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+.wrapper {
+  @extend .input;
+  display: inline-flex;
+
+  &:not(.disabled):hover,
+  &.focused {
+    .prefix,
+    .suffix {
+      color: $input-color;
+    }
+  }
+
+  .input {
+    padding: 0;
+    border: none;
+    outline: none;
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &[disabled] {
+      background-color: transparent;
+    }
+  }
+}
+
+.prefix,
+.suffix {
+  display: flex;
+  flex: none;
+  align-items: center;
+  color: $input-placeholder;
+  transition: color 0.3s;
+}
+
+.prefix {
+  margin-right: 4px;
+}
+
+.suffix {
+  margin-left: 4px;
+}
